@@ -1,0 +1,52 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=lisa-re
+
+defaults:
+  - override /dataset: n2c2_prepared.yaml
+  - override /datamodule: default.yaml
+  - override /taskmodule: re_text_classification_with_indices.yaml
+  - override /model: simple_sequence_classification.yaml
+  - override /callbacks: default.yaml
+  - override /logger: wandb.yaml #TODO: install wandb and re-add
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# name of the run determines folder name in logs
+name: "dataset+n2c2/task+relations"
+
+tags: ["dataset=n2c2", "model=relation_extraction"]
+
+seed: 12345
+
+transformer_model: FacebookAI/xlm-roberta-base
+
+monitor_metric: metric/macro/f1/val
+
+trainer:
+  min_epochs: 5
+  max_epochs: 20
+  #gradient_clip_val: 0.5
+
+
+
+datamodule:
+  batch_size: 16
+
+taskmodule:
+  tokenizer_name_or_path: ${transformer_model}
+  add_candidate_relations: True
+  max_window: 512
+  partition_annotation: partitions
+  collect_statistics: true
+
+model:
+  model_name_or_path: ${transformer_model}
+  learning_rate: 1e-5
+  num_classes: 8
+  #weight_decay: 1e-3
+
+model_save_dir: ${paths.save_dir}/models/${name}/${now:%Y-%m-%d_%H-%M-%S}
