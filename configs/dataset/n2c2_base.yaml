@@ -9,9 +9,12 @@ input:
   base_dataset_kwargs:
     url: '/home/bverma/projects/old/pie-rel/data/n2c2_ade.zip' # use public path
     file_name_blacklist:
-      - 106967
+      - "106967"
+      - '110445'
+      - '115157'
     split_paths:
-      train: 'test 2'
+      train: 'n2c2_ade/train'
+      test: 'n2c2_ade/test'
   document_converters:
     pytorch_ie.documents.TextDocumentWithLabeledSpansAndBinaryRelations:
       spans: labeled_spans

@@ -3,5 +3,5 @@ add_partitions:
   function:
     # see this for further information and options:
     # https://github.com/ArneBinder/pie-datasets/blob/main/src/pie_datasets/document/processing/regex_partitioner.py
-    _target_: pie_datasets.document.processing.RegexPartitioner
+    _target_: pie_modules.document.processing.RegexPartitioner
     pattern: ???
