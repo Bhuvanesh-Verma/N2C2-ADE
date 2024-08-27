@@ -7,7 +7,7 @@
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
 <a href="https://hydra.cc/"><img alt="Config: Hydra" src="https://img.shields.io/badge/Config-Hydra-89b8cd"></a>
 <a href="https://github.com/ChristophAlt/pytorch-ie-hydra-template"><img alt="Template" src="https://img.shields.io/badge/-PyTorch--IE--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
-[![Paper](http://img.shields.io/badge/paper-arxiv.1001.2234-B31B1B.svg)](https://academic.oup.com/jamia/article-abstract/27/1/3/5581277?redirectedFrom=fulltext)
+[![Paper](https://img.shields.io/badge/journal-article-jamia)](https://academic.oup.com/jamia/article-abstract/27/1/3/5581277?redirectedFrom=fulltext)
 </div>
 
 ## 📌 Description
