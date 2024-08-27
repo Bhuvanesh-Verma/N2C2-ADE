@@ -1,6 +1,3 @@
-# IMPORTANT: This requires to have the corpus data zip file
-# "merged_2001_3000_positives_curated_deidentified_cleaned_format_fixed.zip" in the "data" folder!
-# See dataset_builders/pie/lisa/lisa.py for more information.
 _target_: src.utils.execute_pipeline
 input:
   _target_: pie_datasets.DatasetDict.load_dataset
