@@ -1,20 +1,19 @@
-# IMPORTANT: This requires to have the corpus data zip file
-# "merged_2001_3000_positives_curated_deidentified_cleaned_format_fixed.zip" in the "data" folder!
-# See dataset_builders/pie/lisa/lisa.py for more information.
+# this is dataset config for N2C2 ADE dataset where entities like Drug is replaced by DRUG and ADE, Reason by DISORDER
+# Similarly relations like Drug-ADE is replaced by CAUSED and Drug-Reason by TREATMENT_FOR
 _target_: src.utils.execute_pipeline
 input:
   _target_: pie_datasets.DatasetDict.load_dataset
   path: pie/brat
   name: merge_fragmented_spans
   base_dataset_kwargs:
-    url: "path/to/n2c2_ade.zip" # use public path
+    url: 'path/to/new/data/n2c2_ade_new.zip'
     file_name_blacklist:
       - "106967"
       - '110445'
-      #- '115157'
+      - '115157'
     split_paths:
-      train: 'n2c2_ade/train'
-      test: 'n2c2_ade/test'
+      train: 'n2c2_ade_new/train'
+      test: 'n2c2_ade_new/test'
   document_converters:
     pytorch_ie.documents.TextDocumentWithLabeledSpansAndBinaryRelations:
       spans: labeled_spans

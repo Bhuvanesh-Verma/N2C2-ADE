@@ -1,0 +1,19 @@
+# corresponding dataset prepare config for new N2C2 ADE Dataset described in n2c2_base_new.yaml
+defaults:
+  - n2c2_base_new
+  - _cast_document_type
+  - _add_partitions
+  - _create_validation_split
+cast_document_type:
+  new_document_type: pytorch_ie.documents.TextDocumentWithLabeledSpansBinaryRelationsAndLabeledPartitions
+  field_mapping:
+    spans: labeled_spans
+    relations: binary_relations
+
+add_partitions:
+  function:
+    pattern: '\n\n+'
+    # collect_statistics: true
+    # strip_whitespace: true
+    default_partition_label: paragraph
+    partition_layer_name: labeled_partitions
