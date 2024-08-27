@@ -1,0 +1,16 @@
+_target_: src.serializer.BratSerializer
+path: ${prediction_save_dir}
+split: ${dataset_split}
+layers:
+  spans: prediction
+  relations: prediction
+document_processor:
+  _target_: pie_modules.document.processing.SpansViaRelationMerger
+  relation_layer: binary_relations
+  link_relation_label: parts_of_same
+  result_document_type: pie_datasets.builders.brat.BratDocument
+  use_predicted_spans: False
+  result_field_mapping:
+    labeled_spans: spans
+    binary_relations: relations
+
