@@ -1,0 +1,3 @@
+_target_: pie_modules.models.TokenClassificationModelWithSeq2SeqEncoderAndCrf
+
+model_name_or_path: bert-base-uncased
