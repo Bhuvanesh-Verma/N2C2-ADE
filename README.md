@@ -47,6 +47,32 @@ cp .env.example .env
 # 2. edit the .env file for your needs!
 ```
 
+### Data Access
+
+N2C2-ADE dataset can be made available on request from [DBMI Data Portal](https://portal.dbmi.hms.harvard.edu/projects/n2c2-nlp/).
+After acquiring the access save the folder containing train, dev and test 
+set as 'n2c2_ade.zip' in `data` folder of this project. You can change the name
+of the zip file but that should also be changed in corresponding [dataset config](configs/dataset/n2c2_base.yaml).
+
+```yaml
+# configs/dataset/n2c2_base.yaml
+_target_: src.utils.execute_pipeline
+input:
+  _target_: pie_datasets.DatasetDict.load_dataset
+  path: pie/brat
+  name: merge_fragmented_spans
+  base_dataset_kwargs:
+    url: "path/to/n2c2_ade.zip" <<----- CHANGE THE NAME OR PATH HERE
+    file_name_blacklist:
+      - "106967"
+      - '110445'
+      #- '115157'
+    split_paths:
+      train: 'n2c2_ade/train'
+      test: 'n2c2_ade/test'
+
+```
+
 ### Model Training
 
 **Have a look into the [train.yaml](configs/train.yaml) config to see all available options.**
@@ -55,40 +81,23 @@ Train model with default configuration
 
 ```bash
 # train on CPU
-python src/train.py
+python src/train.py experiment=n2c2_ner monitor_metric=metric/span/macro/f1/train
 
 # train on GPU
-python src/train.py trainer=gpu
+python src/train.py experiment=n2c2_ner monitor_metric=metric/span/macro/f1/train trainer=gpu
 ```
 
 Execute a fast development run (train for two steps)
 
 ```bash
-python src/train.py +trainer.fast_dev_run=true
+python src/train.py experiment=n2c2_ner monitor_metric=metric/span/macro/f1/train +trainer.fast_dev_run=true
 ```
 
-Train model with chosen experiment configuration from [configs/experiment/](configs/experiment/)
+Train model with different experiment configuration from [configs/experiment/](configs/experiment/)
 
 ```bash
-python src/train.py experiment=conll2003
+python src/train.py monitor_metric=metric/span/macro/f1/train experiment=n2c2_re
 ```
-
-You can override any parameter from command line like this
-
-```bash
-python train.py trainer.max_epochs=20 datamodule.batch_size=64
-```
-
-Start multiple runs at once (multirun):
-
-```bash
-python src/train.py seed=42,43 --multirun
-```
-
-Notes:
-
-- this will execute two experiments (one after the other), one for each seed
-- the results will be aggregated and stored in `logs/multirun/`, see the last logging output for the exact path
 
 ### Model evaluation
 
@@ -98,7 +107,7 @@ See [config/dataset/](configs/dataset/) for available datasets.
 **Have a look into the [evaluate.yaml](configs/evaluate.yaml) config to see all available options.**
 
 ```bash
-python src/evaluate.py dataset=conll2003 model_name_or_path=pie/example-ner-spanclf-conll03
+python src/evaluate.py dataset=n2c2_ner model_name_or_path=path/to/saved/model
 ```
 
 Notes:
@@ -114,7 +123,7 @@ location will be printed to the console).
 **Have a look into the [predict.yaml](configs/predict.yaml) config to see all available options.**
 
 ```bash
-python src/predict.py dataset=conll2003 model_name_or_path=pie/example-ner-spanclf-conll03
+python src/predict.py dataset=n2c2_ner model_name_or_path=path/to/n2c2-ner-model
 ```
 
 Notes:
